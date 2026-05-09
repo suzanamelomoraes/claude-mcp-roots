@@ -97,6 +97,7 @@ The video conversion tool uses FFmpeg to convert MP4 files to various formats:
 This program is set up to accept a list of CLI arguments, which are interpreted as paths that the user wants to allow access to.
 
 **_main.py_**
+
 `root_paths = sys.argv[1:]`
 
 That list of paths is provided to the MCPClient down on lines 42.
@@ -118,7 +119,7 @@ This callback is passed into the `ClientSession` down on line 58 of `mcp_client.
 On to the server. The server will use the roots in two scenarios:
 
 1. Whenever a tool attempts to access a file or folder
-2. When a LLM (like Claude) needs to resolve a file or folder to a full path. Think of when a user says 'read the todos.txt file' - Claude needs to figure out where the text file is, and might do so by looking at the list of roots
+2. When a LLM (like Claude) needs to resolve a file or folder to a full path. Think of when a user says _'read the todos.txt file'_ - Claude needs to figure out where the text file is, and might do so by looking at the list of roots
 
 To handle the second case, we can either define a tool that lists out the roots or inject them directly in a prompt.
 
@@ -134,7 +135,9 @@ The MCP SDK does not attempt to limit what files or folders your tools attempt t
 
 A function like `is_path_allowed`, will decide whether a path is accessible by comparing it to the list of roots.
 
-## Use it throughout your tools to ensure the requested path is accessible
+Use it throughout your tools to ensure the requested path is accessible
+
+---
 
 # Roots
 
