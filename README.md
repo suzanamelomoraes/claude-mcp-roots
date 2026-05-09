@@ -107,6 +107,28 @@ The MCP SDK doesn't automatically enforce root restrictions - you need to implem
 - Checks if the requested path falls within one of those roots
 - Returns true/false for access permission
 
+```python
+async def is_path_allowed(requested_path: Path, ctx: Context) -> bool:
+    roots_result = await ctx.session.list_roots()
+    client_roots = roots_result.roots
+
+    if not requested_path.exists():
+        return False
+
+    if requested_path.is_file():
+        requested_path = requested_path.parent
+
+    for root in client_roots:
+        root_path = file_url_to_path(root.uri)
+        try:
+            requested_path.relative_to(root_path)
+            return True
+        except ValueError:
+            continue
+
+    return False
+```
+
 You then call this function in any tool that accesses files or directories before performing the actual file operation.
 
 ## Key Benefits
